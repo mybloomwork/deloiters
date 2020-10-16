@@ -3,4 +3,5 @@ Pillow
 Stripe
 xhtml2pdf
 gunicorn
+django psycopg2-binary
 
