@@ -23,8 +23,8 @@ def admin_order_shipped(modeladmin, request, queryset):
         order.save()
 
         html = render_to_string('order_sent.html', {'order': order})
-        send_mail('Order sent', 'Your order is successful!', 'dynarielinnovations@gmail.com',
-                  ['dynarielinnovations@gmail.com', order.email], fail_silently=False, html_message=html)
+        send_mail('Order sent', 'Your order is successful!', 'salesreportdynarielinnovations@gmail.com',
+                  ['salesreportdynarielinnovations@gmail.com', order.email], fail_silently=False, html_message=html)
     return
 admin_order_shipped.short_description = 'Set shipped'
 
