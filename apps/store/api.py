@@ -62,8 +62,8 @@ def create_checkout_session(request):
         payment_method_types=['card'],
         line_items=items,
         mode='payment',
-        success_url='http://157.230.11.185:8001/cart/success/',
-        cancel_url='http://157.230.11.185:8001/cart/'
+        success_url='http://64.227.28.196:8001/cart/success/',
+        cancel_url='http://64.227.28.196:8001/cart/'
     )
 
     #
