@@ -4,7 +4,6 @@ import stripe
 from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 
@@ -12,6 +11,7 @@ from .cart import Cart
 from apps.order.views import render_to_pdf
 
 from apps.order.models import Order
+
 
 @csrf_exempt
 def webhook(request):
@@ -30,8 +30,6 @@ def webhook(request):
     if event.type == 'payment_intent.succeeded':
         payment_intent = event.data.object
 
-        print('Payment intent:', payment_intent.id)
-
         order = Order.objects.get(payment_intent=payment_intent.id)
         order.paid = True
         order.save()
@@ -42,8 +40,8 @@ def webhook(request):
             product.save()
 
         subject = 'Order confirmation'
-        from_email = 'dynarielinnovations@gmail.com'
-        to = ['dynarielinnovations@gmail.com', order.email]
+        from_email = 'salesreportdynarielinnovations@gmail.com'
+        to = ['salesreportdynarielinnovations@gmail.com', order.email]
         text_content = 'Your order is successful!'
         html_content = render_to_string('order_confirmation.html', {'order': order})
 
@@ -57,8 +55,5 @@ def webhook(request):
             msg.attach(name, pdf, 'application/pdf')
 
         msg.send()
-
-        #html = render_to_string('order_confirmation.html', {'order': order})
-        #send_mail('Order confirmation', 'Your order is successful!', 'dynarielinnovations@gmail.com', ['dynarielinnovations@gmail.com', order.email], fail_silently=False, html_message=html)
 
     return HttpResponse(status=200)
